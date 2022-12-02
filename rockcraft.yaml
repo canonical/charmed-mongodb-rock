@@ -13,10 +13,8 @@ platforms: # The platforms this ROCK should be built on and run on
     amd64:
 
 parts:
-    mongo-deb:
+    mongo-repo:
         plugin: nil
-        stage-packages:
-          - percona-server-mongodb
         override-pull: |
             apt update
             apt install -y wget lsb-release
@@ -26,3 +24,8 @@ parts:
             apt update
         override-build: |
             mkdir -p $CRAFT_PART_INSTALL/data/db
+    mongo-deb:
+        plugin: nil
+        after: [mongo-repo]
+        stage-packages:
+            - percona-server-mongodb
