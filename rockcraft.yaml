@@ -29,3 +29,8 @@ parts:
         after: [mongo-repo]
         stage-packages:
             - percona-server-mongodb
+    non-root-user:
+        plugin: nil
+        overlay-script: |
+            chroot $CRAFT_OVERLAY
+            useradd -M -r mongo
