@@ -31,6 +31,8 @@ parts:
             - percona-server-mongodb
     non-root-user:
         plugin: nil
+        after: [mongo-deb]
         overlay-script: |
-            chroot $CRAFT_OVERLAY
-            useradd -M -r mongo
+          # Create a user in the $CRAFT_OVERLAY chroot
+          groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
+          useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
