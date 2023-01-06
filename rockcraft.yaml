@@ -7,7 +7,7 @@ description: |
     document-oriented database program. Classified 
     as a NoSQL database program, MongoDB uses JSON
     -like documents with optional schemas.
-license: SSPL-1.0 # your application's SPDX license
+license: Apache-2.0 # your application's SPDX license
 cmd: [/usr/bin/mongod]
 platforms: # The platforms this ROCK should be built on and run on
     amd64:
@@ -24,18 +24,16 @@ parts:
             apt update
         override-build: |
             mkdir -p $CRAFT_PART_INSTALL/data/db
-    mongo-deb:
+    install-packages:
         plugin: nil
         after: [mongo-repo]
         stage-packages:
             - percona-server-mongodb
+        stage-snaps: [xtrabackup/latest/edge]
     non-root-user:
         plugin: nil
-        after: [mongo-deb]
+        after: [install-packages]
         overlay-script: |
           # Create a user in the $CRAFT_OVERLAY chroot
           groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
           useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
-    xtrabakup:
-        plugin: nil
-        stage-snaps: [xtrabackup/latest/edge]
