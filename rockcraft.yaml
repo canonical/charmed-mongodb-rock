@@ -36,3 +36,6 @@ parts:
           # Create a user in the $CRAFT_OVERLAY chroot
           groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
           useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
+    xtrabakup:
+        plugin: nil
+        stage-snaps: [xtrabackup/latest/edge]
