@@ -18,6 +18,8 @@ jobs:
       - name: Install rockcraft
         run: |
           sudo snap install --classic --channel edge rockcraft
+          sudo iptables -F FORWARD
+          sudo iptables -P FORWARD ACCEPT
       - name: Build ROCK
         run: rockcraft pack --verbose
 
