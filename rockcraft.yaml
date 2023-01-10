@@ -1,3 +1,5 @@
+# Copyright 2023 Canonical Ltd.
+# See LICENSE file for licensing details.
 name: mongodb # the name of your ROCK
 base: ubuntu:22.04 # the base environment for this ROCK
 version: '5.0' # just for humans. Semantic versioning is recommended
