@@ -1,3 +1,5 @@
+# Copyright 2023 Canonical Ltd.
+# See LICENSE file for licensing details.
 name: mongodb # the name of your ROCK
 base: ubuntu:22.04 # the base environment for this ROCK
 version: '5.0' # just for humans. Semantic versioning is recommended
@@ -7,7 +9,7 @@ description: |
     document-oriented database program. Classified 
     as a NoSQL database program, MongoDB uses JSON
     -like documents with optional schemas.
-license: SSPL-1.0 # your application's SPDX license
+license: Apache-2.0 # your application's SPDX license
 cmd: [/usr/bin/mongod]
 platforms: # The platforms this ROCK should be built on and run on
     amd64:
