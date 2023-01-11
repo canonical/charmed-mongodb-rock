@@ -10,7 +10,15 @@ description: |
     as a NoSQL database program, MongoDB uses JSON
     -like documents with optional schemas.
 license: Apache-2.0 # your application's SPDX license
-cmd: [/usr/bin/mongod]
+cmd: 
+    - /usr/bin/setpriv
+    - --clear-groups
+    - --reuid
+    - mongodb
+    - --regid
+    - mongodb
+    - --
+    - /usr/bin/mongod
 platforms: # The platforms this ROCK should be built on and run on
     amd64:
 
@@ -25,12 +33,13 @@ parts:
             percona-release enable psmdb-50 release
             apt update
         override-build: |
-            mkdir -p $CRAFT_PART_INSTALL/data/db
+            mkdir -p $CRAFT_PART_INSTALL/db/data
     mongo-deb:
         plugin: nil
         after: [mongo-repo]
         stage-packages:
             - percona-server-mongodb
+            - utils-linux
     non-root-user:
         plugin: nil
         after: [mongo-deb]
@@ -38,3 +47,6 @@ parts:
           # Create a user in the $CRAFT_OVERLAY chroot
           groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
           useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
+        override-prime: |
+          craftctl default
+          chown -R mongodb:mongodb db
