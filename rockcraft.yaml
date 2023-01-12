@@ -33,20 +33,20 @@ parts:
             percona-release enable psmdb-50 release
             apt update
         override-build: |
-            mkdir -p $CRAFT_PART_INSTALL/db/data
+            mkdir -p $CRAFT_PART_INSTALL/data/db
     mongo-deb:
         plugin: nil
         after: [mongo-repo]
         stage-packages:
             - percona-server-mongodb
-            - utils-linux
+            - util-linux
     non-root-user:
         plugin: nil
         after: [mongo-deb]
         overlay-script: |
-          # Create a user in the $CRAFT_OVERLAY chroot
-          groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
-          useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
+            # Create a user in the $CRAFT_OVERLAY chroot
+            groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
+            useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
         override-prime: |
-          craftctl default
-          chown -R mongodb:mongodb db
+            craftctl default
+            chown -R 1000:1000 data
