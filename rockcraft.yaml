@@ -31,6 +31,8 @@ parts:
             wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
             dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
             percona-release enable psmdb-50 release
+            wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -
+            echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
             apt update
         override-build: |
             mkdir -p $CRAFT_PART_INSTALL/data/db
@@ -40,6 +42,8 @@ parts:
         stage-packages:
             - percona-server-mongodb
             - util-linux
+            - mongodb-mongosh
+            - mongodb-mongosh-shared-openssl3
     non-root-user:
         plugin: nil
         after: [mongo-deb]
