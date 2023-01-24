@@ -39,6 +39,7 @@ parts:
         after: [mongo-repo]
         stage-packages:
             - percona-server-mongodb
+            - percona-server-mongodb-shell
             - util-linux
     non-root-user:
         plugin: nil
