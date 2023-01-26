@@ -12,7 +12,8 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          # This is needed until https://bugs.launchpad.net/juju/+bug/1977582 is fixed
+          # This is needed until
+          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
       - name: Install Helm
         run: /usr/bin/sudo snap install helm3
@@ -32,7 +33,8 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          # This is needed until https://bugs.launchpad.net/juju/+bug/1977582 is fixed
+          # This is needed until
+          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
       - name: Install Helm
         run: /usr/bin/sudo snap install helm3
@@ -52,7 +54,8 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          # This is needed until https://bugs.launchpad.net/juju/+bug/1977582 is fixed
+          # This is needed until
+          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
       - name: Install Helm
         run: /usr/bin/sudo snap install helm3
