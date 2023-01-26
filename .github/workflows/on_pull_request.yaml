@@ -1,0 +1,8 @@
+on:
+  pull_request:
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yaml
+  integration:
+    uses: ./.github/workflows/integration.yaml
