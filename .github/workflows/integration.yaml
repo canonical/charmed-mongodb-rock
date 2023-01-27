@@ -15,8 +15,6 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
-      - name: Install Helm
-        run: /usr/bin/sudo snap install helm3
       - name: Install rockcraft
         run: |
           sudo snap install --classic --channel edge rockcraft
@@ -36,8 +34,6 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
-      - name: Install Helm
-        run: /usr/bin/sudo snap install helm3
       - name: Install rockcraft
         run: |
           sudo snap install --classic --channel edge rockcraft
@@ -57,8 +53,6 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
-      - name: Install Helm
-        run: /usr/bin/sudo snap install helm3
       - name: Install rockcraft
         run: |
           sudo snap install --classic --channel edge rockcraft
