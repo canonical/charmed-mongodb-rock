@@ -64,5 +64,5 @@ jobs:
           sudo snap install --classic --channel edge rockcraft
       - name: Install tox
         run: python3 -m pip install tox
-      - name: HA Integration Tests
+      - name: TLS Integration Tests
         run: sg microk8s -c "tox -e tls-integration"
