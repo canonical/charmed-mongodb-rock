@@ -6,8 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    uses: ./.github/workflows/build.yaml
   integration:
     runs-on: ubuntu-latest
+    needs: build
     strategy:
       matrix:
         env: [integration, ha-integration, tls-integration]
@@ -21,9 +24,9 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
-      - name: Install rockcraft
-        run: |
-          sudo snap install --classic --channel edge rockcraft
+      - uses: actions/download-artifact@v3
+        with:
+          name: mongodb-rock
       - name: Install tox
         run: python3 -m pip install tox
       - name: Integration Tests
