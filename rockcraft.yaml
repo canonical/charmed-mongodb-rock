@@ -5,12 +5,12 @@ base: ubuntu:22.04 # the base environment for this ROCK
 version: '5.0' # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
 description: |
-    MongoDB is a source-available cross-platform 
-    document-oriented database program. Classified 
+    MongoDB is a source-available cross-platform
+    document-oriented database program. Classified
     as a NoSQL database program, MongoDB uses JSON
     -like documents with optional schemas.
 license: Apache-2.0 # your application's SPDX license
-cmd: 
+cmd:
     - /usr/bin/setpriv
     - --clear-groups
     - --reuid
@@ -28,7 +28,8 @@ parts:
         override-pull: |
             apt update
             apt install -y wget lsb-release
-            wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
+            wget https://repo.percona.com/apt/percona-release_latest.$(\
+                lsb_release \-sc)_all.deb
             dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
             percona-release enable psmdb-50 release
             apt update
