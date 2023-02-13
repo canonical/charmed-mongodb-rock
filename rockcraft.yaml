@@ -23,34 +23,18 @@ platforms: # The platforms this ROCK should be built on and run on
     amd64:
 
 parts:
-    mongo-repo:
+    mongo-snap:
         plugin: nil
-        override-pull: |
-            apt update
-            apt install -y wget lsb-release
-            wget https://repo.percona.com/apt/percona-release_latest.$(\
-                lsb_release \-sc)_all.deb
-            dpkg -i percona-release_latest.$(lsb_release -sc)_all.deb
-            percona-release enable psmdb-50 release
-            percona-release enable pbm release
-            apt update
-        override-build: |
-            mkdir -p $CRAFT_PART_INSTALL/data/db
-    mongo-deb:
+        stage-snaps:
+            - charmed-mongodb/5.0/edge
+    dep-debs:
         plugin: nil
-        after: [mongo-repo]
         stage-packages:
-            - percona-server-mongodb
-            - percona-server-mongodb-shell
-            - percona-backup-mongodb
             - util-linux
     non-root-user:
         plugin: nil
-        after: [mongo-deb]
+        after: [mongo-snap]
         overlay-script: |
             # Create a user in the $CRAFT_OVERLAY chroot
             groupadd -R $CRAFT_OVERLAY -g 1000 mongodb
             useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 1000 mongodb
-        override-prime: |
-            craftctl default
-            chown -R 1000:1000 data
