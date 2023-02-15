@@ -18,7 +18,7 @@ cmd:
     - --regid
     - mongodb
     - --
-    - /snap/bin/charmed-mongodb.mongod
+    - /usr/bin/mongod
 platforms: # The platforms this ROCK should be built on and run on
     amd64:
 
