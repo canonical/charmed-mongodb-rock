@@ -27,14 +27,6 @@ parts:
         plugin: nil
         stage-snaps:
             - charmed-mongodb/5.0/edge
-        override-prime: |
-            craftctl default
-            export SNAP=$CRAFT_STAGE
-            export SNAP_COMMON=$CRAFT_PRIME/var/snap/charmed-mongodb/common
-            export SNAP_DATA=$CRAFT_PRIME/var/snap/charmed-mongodb/current
-            mkdir -p $SNAP_COMMON
-            mkdir -p $SNAP_DATA
-            $CRAFT_PRIME/snap.charmed-mongodb/hooks/install
     dep-debs:
         plugin: nil
         stage-packages:
