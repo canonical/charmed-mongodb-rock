@@ -31,6 +31,7 @@ parts:
         plugin: nil
         stage-packages:
             - util-linux
+            - libssh-4
     non-root-user:
         plugin: nil
         after: [mongo-snap]
