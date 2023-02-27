@@ -32,6 +32,7 @@ parts:
         stage-packages:
             - util-linux
             - libssh-4
+            - libbrotli1
     non-root-user:
         plugin: nil
         after: [mongo-snap]
