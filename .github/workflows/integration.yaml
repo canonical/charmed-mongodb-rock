@@ -1,5 +1,9 @@
 name: Operator Tests
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
   workflow_call:
@@ -10,6 +14,7 @@ jobs:
     uses: ./.github/workflows/build.yaml
   integration:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     needs: build
     strategy:
       matrix:
