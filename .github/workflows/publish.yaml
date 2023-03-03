@@ -2,10 +2,10 @@ name: Publish ROCK
 on:
   push:
     branches:
-      - '*.*/stable'
+      - '[0-9]-[a-z]+'
   workflow_dispatch:
     branches:
-      - '*.*/stable'
+      - '[0-9]-[a-z]+'
 
 jobs:
   build:
@@ -25,9 +25,6 @@ jobs:
       - name: Install skopeo
         run: |
           sudo snap install --devmode --channel edge skopeo
-      - name: Install yq
-        run: |
-          sudo snap install yq
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
@@ -40,10 +37,9 @@ jobs:
 
       - name: Import and push to Docker Hub
         run: |
-          version="$(cat rockcraft.yaml | yq e '.version')"
           sudo skopeo \
             --insecure-policy \
             copy \
-            oci-archive:"mongodb_${version}_amd64.rock" \
-            docker-daemon:"dataplatformoci/mongodb:${version}"
-          docker push "dataplatformoci/mongodb:${version}"
+            oci-archive:"charmed-mongodb_${{ github.ref_name }}_amd64.rock" \
+            docker-daemon:"dataplatformoci/charmed-mongodb:${{ github.ref_name }}"
+          docker push "dataplatformoci/charmed-mongodb:${{ github.ref_name }}"
