@@ -40,6 +40,6 @@ jobs:
           sudo skopeo \
             --insecure-policy \
             copy \
-            oci-archive:"charmed-mongodb_${{ github.ref_name }}_amd64.rock" \
-            docker-daemon:"dataplatformoci/charmed-mongodb:${{ github.ref_name }}"
-          docker push "dataplatformoci/charmed-mongodb:${{ github.ref_name }}"
+            oci-archive:charmed-mongodb_${{ github.ref_name }}_amd64.rock \
+            docker-daemon:dataplatformoci/charmed-mongodb:${{ github.ref_name }}
+          docker push dataplatformoci/charmed-mongodb:${{ github.ref_name }}
