@@ -30,6 +30,15 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 2.9.29"
+      - name: Setup Docker
+        run: |
+          sudo snap install docker
+          sudo addgroup --system docker; sudo adduser $USER docker
+          newgrp docker
+          sudo snap disable docker; sudo snap enable docker
+      - name: Install skopeo
+        run: |
+          sudo snap install --devmode --channel edge skopeo
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
