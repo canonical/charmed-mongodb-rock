@@ -32,19 +32,16 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-
-      - name: Import and push to Docker Hub
+      - name: Login to GHCR
+        run: |
+          echo ${{ secrets.$CR_PAT }} | \
+          docker login ghcr.io -u canonical --password-stdin
+      - name: Import and push to GHCR
         run: |
           version="$(cat rockcraft.yaml | yq e '.version')"
           sudo skopeo \
             --insecure-policy \
             copy \
             oci-archive:charmed-mongodb_${version}_amd64.rock \
-            docker-daemon:dataplatformoci/charmed-mongodb:${{ github.ref_name }}
-          docker push dataplatformoci/charmed-mongodb:${{ github.ref_name }}
+            docker-daemon:canonical/charmed-mongodb:${{ github.ref_name }}
+          docker push ghcr.io/canonical/charmed-mongodb:${{ github.ref_name }}
