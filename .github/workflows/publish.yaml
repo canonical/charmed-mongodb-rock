@@ -38,7 +38,9 @@ jobs:
       - name: Import and push to GHCR
         run: |
           app_version=$(yq '.version' rockcraft.yaml)
-          tag=$(yq '(.version|split("."))[0] + "-" + (.base|split(":"))[1] + "_edge" ' rockcraft.yaml)
+          version=$(yq '(.version|split("."))[0]' rockcraft.yaml)
+          base=$(yq '(.base|split(":"))[1]' rockcraft.yaml)
+          tag=${version}-${base}_edge
           sudo skopeo --insecure-policy copy \
             oci-archive:charmed-mongodb_${app_version}_amd64.rock \
             docker-daemon:ghcr.io/canonical/charmed-mongodb:${tag}
