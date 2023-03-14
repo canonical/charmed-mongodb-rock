@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - name: Import and push to GHCR
         run: |
-          version=$(yq '(.version|split("."))[0]' rockcraft.yaml)
+          version=$(yq '(.version|split("-"))[0]' rockcraft.yaml)
           base=$(yq '(.base|split(":"))[1]' rockcraft.yaml)
           tag=${version}-${base}_edge
           sudo skopeo --insecure-policy copy \
