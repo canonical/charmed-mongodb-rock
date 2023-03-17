@@ -32,5 +32,5 @@ docker run --rm -it <username>/mongodb:<tag>
 ## License
 The Percona MongoDB ROCK is free software, distributed under the Apache
 Software License, version 2.0. See
-[LICENSE](https://github.com/canonical/mongodb-rock/blob/5.0/stable/LICENSE)
+[LICENSE](https://github.com/canonical/mongodb-rock/blob/5-22.04/licenses)
 for more information.
