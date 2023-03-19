@@ -1,17 +1,17 @@
-# Percona MongoDB ROCK
-This repository contains the packaging metadata for creating a ROCK of Percona MongoDB built from the official percona debian repositories.  For more information on ROCKs, visit the [rockcraft Github](https://github.com/canonical/rockcraft). 
+# Charmed MongoDB ROCK
+This repository contains the packaging metadata for creating a ROCK of Charmed MongoDB built from [Charmed MongoDB Snap](https://snapcraft.io/charmed-mongodb). For more information on ROCKs, visit the [Rockcraft Github](https://github.com/canonical/rockcraft). 
 
 ## Building the ROCK
-The steps outlined below are based on the assumption that you are building the ROCK with the latest LTS of Ubuntu.  If you are using another version of Ubuntu or another operating system, the process may be different.
+The steps outlined below are based on the assumption that you are building the ROCK with the latest LTS of Ubuntu. If you are using another version of Ubuntu or another operating system, the process may be different.
 
 ### Clone Repository
 ```bash
-git clone git@github.com:canonical/mongodb-rock.git
-cd mongodb-rock
+git clone https://github.com/canonical/charmed-mongodb-rock.git
+cd charmed-mongodb-rock
 ```
 ### Installing Prerequisites
 ```bash
-sudo snap install rockcraft --edge
+sudo snap install rockcraft --edge --classic
 sudo snap install docker
 sudo snap install lxd
 sudo snap install skopeo --edge --devmode
@@ -25,12 +25,17 @@ sudo lxd init --auto
 ### Packing and Running the ROCK
 ```bash
 rockcraft pack
-sudo skopeo --insecure-policy copy oci-archive:mongo*.rock docker-daemon:<username>/mongodb:<tag>
-docker run --rm -it <username>/mongodb:<tag>
+sudo skopeo --insecure-policy copy oci-archive:charmed-mongodb*.rock docker-daemon:<username>/charmed-mongodb:<tag>
+docker run --rm -it <username>/charmed-mongodb:<tag>
 ```
 
 ## License
-The Percona MongoDB ROCK is free software, distributed under the Apache
+The Charmed MongoDB ROCK is free software, distributed under the Apache
 Software License, version 2.0. See
-[LICENSE](https://github.com/canonical/mongodb-rock/blob/5-22.04/licenses)
+[LICENSE](https://github.com/canonical/charmed-mongodb-rock/blob/5-22.04/licenses)
 for more information.
+
+## Trademark Notice
+MongoDB is a trademark or registered trademark of MongoDB, Inc.
+Percona is a trademark or registered trademark of Percona LLC.
+Other trademarks are property of their respective owners.
