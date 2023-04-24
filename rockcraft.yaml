@@ -47,3 +47,8 @@ parts:
             mkdir -p $CRAFT_PRIME/data/db
             chmod 0755 $CRAFT_PRIME/data/db
             chown -R 584788:584788 $CRAFT_PRIME/data/db
+    rock-license:
+        plugin: dump
+        source: licenses
+        organize:
+            LICENSE-rock: licenses/LICENSE-rock
