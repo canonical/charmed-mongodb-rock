@@ -34,6 +34,8 @@ sudo docker run --rm -it ghcr.io/canonical/charmed-mongodb:5.0.14-22.04_edge
 ```
 By running this command you have already started the mongod service with Percona Server for MongoDB. Leave this command running and create another terminal.
 
+*Note if you would like to start `mongod` with custom options you can append your desired options to the container run command i.e.*: `sudo docker run --rm -it ghcr.io/canonical/charmed-mongodb:5.0.14-22.04_edge --bind-ip-all --another-option` *you can read more about [mongod optons here](https://www.mongodb.com/docs/manual/reference/program/mongod/)*
+
 To access your now running MongoDB instance enter the command: 
 ```
 sudo docker container ls

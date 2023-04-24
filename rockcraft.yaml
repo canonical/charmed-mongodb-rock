@@ -10,7 +10,7 @@ description: |
     as a NoSQL database program, MongoDB uses JSON
     -like documents with optional schemas.
 license: Apache-2.0 # your application's SPDX license
-cmd:
+entrypoint:
     - /usr/bin/setpriv
     - --clear-groups
     - --reuid
