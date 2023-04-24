@@ -2,7 +2,7 @@
 # See LICENSE file for licensing details.
 name: charmed-mongodb # the name of your ROCK
 base: ubuntu:22.04 # the base environment for this ROCK
-version: '5.0.14-12' # just for humans. Semantic versioning is recommended
+version: "5.0.14-12" # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
 description: |
     MongoDB is a source-available cross-platform
@@ -40,3 +40,14 @@ parts:
             # Create a user in the $CRAFT_OVERLAY chroot
             groupadd -R $CRAFT_OVERLAY -g  584788 mongodb
             useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 584788 mongodb
+        override-prime: |
+            craftctl default
+            # Give permission and create the required directories
+            mkdir -p $CRAFT_PRIME/data/db
+            chmod 0755 $CRAFT_PRIME/data/db
+            chown -R 584788:584788 $CRAFT_PRIME/data/db
+    rock-license:
+        plugin: dump
+        source: licenses
+        organize:
+            LICENSE-rock: licenses/LICENSE-rock
