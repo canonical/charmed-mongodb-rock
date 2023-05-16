@@ -20,7 +20,7 @@ Channel can also be represented by combining `<version>_<risk>`
 
 ## Release
 Charmed MongoDB ROCK  Release Notes
-https://discourse.charmhub.io/t/release-notes-charmed-mongodb-5-snap/10037
+https://discourse.charmhub.io/t/release-notes-charmed-mongodb-5-rock/10038
 
 ## ROCKS Usage
 ### Starting mongod and accessing the database
