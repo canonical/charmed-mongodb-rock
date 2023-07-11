@@ -28,6 +28,8 @@ parts:
         plugin: nil
         stage-snaps:
             - charmed-mongodb/5/edge
+        overlay-packages:
+            - ca-certificates
     dep-debs:
         plugin: nil
         stage-packages:
