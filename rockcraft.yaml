@@ -33,7 +33,6 @@ parts:
     dep-debs:
         plugin: nil
         stage-packages:
-            - util-linux
             - libssh-4
             - libbrotli1
     non-root-user:
