@@ -48,11 +48,14 @@ parts:
       mkdir -p $CRAFT_PRIME/data/db
       chmod 0755 $CRAFT_PRIME/data/db
       chown -R 584788:584788 $CRAFT_PRIME/data/db
-      
       # enable security monitoring
       rocks=usr/share/rocks/
       mkdir -p ${rocks}
-      
+      ## for deb packages
+      dpkg-query \ 
+        -f '${db:Status-Abbrev},${binary:Package},${Version}, \
+        ${source:Package},${Source:Version}\n' \
+        -W > ${rocks}/dpkg.query
       ## for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
       cp snap.charmed-mongodb/snapcraft.yaml ${rocks}
