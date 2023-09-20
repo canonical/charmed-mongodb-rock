@@ -52,10 +52,7 @@ parts:
       rocks=usr/share/rocks/
       mkdir -p ${rocks}
       ## for deb packages
-      dpkg-query \ 
-        -f '${db:Status-Abbrev},${binary:Package},${Version}, \
-        ${source:Package},${Source:Version}\n' \
-        -W > ${rocks}/dpkg.query
+      dpkg-query -f '${db:Status-Abbrev},${binary:Package},${Version}, ${source:Package},${Source:Version}\n' -W > ${rocks}/dpkg.query
       ## for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
       cp snap.charmed-mongodb/snapcraft.yaml ${rocks}
