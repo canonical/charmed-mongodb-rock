@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build.yaml
+    with:
+      charmcraft-snap-revision: 1349 # version 2.3.0
   integration:
     runs-on: ubuntu-latest
     timeout-minutes: 120
