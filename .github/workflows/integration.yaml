@@ -27,6 +27,8 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
+          channel: "1.27-strict/stable"
+          juju-channel: 3.1/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 3.1.5"
