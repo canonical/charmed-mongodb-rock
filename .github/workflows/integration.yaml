@@ -33,6 +33,9 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 3.1.5"
+      - name: Pin charmcraft version
+        run: |
+          sudo snap refresh --channel=2.2 charmcraft
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
