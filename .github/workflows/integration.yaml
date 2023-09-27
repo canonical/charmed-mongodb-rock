@@ -31,6 +31,7 @@ jobs:
         with:
           provider: microk8s
           channel: "1.27-strict/stable"
+          bootstrap-constraints: "cores=2 mem=2G"
           juju-channel: 3.1/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
