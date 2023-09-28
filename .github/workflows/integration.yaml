@@ -27,13 +27,19 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
+          channel: "1.27-strict/stable"
+          bootstrap-constraints: "cores=2 mem=2G"
+          juju-channel: 3.1/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 2.9.29"
+          bootstrap-options: "--agent-version 3.1.5"
+      - name: Pin charmcraft version
+        run: |
+          sudo snap refresh --channel=2.2 charmcraft
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
       - name: Install tox
         run: python3 -m pip install tox
       - name: Integration Tests
-        run: sg microk8s -c "tox -e ${{ matrix.env }}"
+        run: sg snap_microk8s -c "tox -e ${{ matrix.env }}"
