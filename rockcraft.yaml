@@ -16,15 +16,7 @@ services:
     summary: Start Mongod
     override: replace
     startup: enabled
-    command:
-      - /usr/bin/setpriv
-      - --clear-groups
-      - --reuid
-      - mongodb
-      - --regid
-      - mongodb
-      - --
-      - /usr/bin/mongod
+    command: "/usr/bin/setpriv --clear-groups --reuid mongodb --regid mongodb -- /usr/bin/mongod"
 
 
 platforms: # The platforms this ROCK should be built on and run on
