@@ -10,15 +10,22 @@ description: |
   as a NoSQL database program, MongoDB uses JSON
   -like documents with optional schemas.
 license: Apache-2.0 # your application's SPDX license
-entrypoint:
-  - /usr/bin/setpriv
-  - --clear-groups
-  - --reuid
-  - mongodb
-  - --regid
-  - mongodb
-  - --
-  - /usr/bin/mongod
+
+services:
+  mongod:
+    summary: Start Mongod
+    override: replace
+    startup: enabled
+    command:
+      - /usr/bin/setpriv
+      - --clear-groups
+      - --reuid
+      - mongodb
+      - --regid
+      - mongodb
+      - --
+      - /usr/bin/mongod
+
 
 platforms: # The platforms this ROCK should be built on and run on
   amd64:
@@ -44,13 +51,16 @@ parts:
       useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 584788 mongodb
     override-prime: |
       craftctl default
+
       # Give permission and create the required directories
       mkdir -p $CRAFT_PRIME/data/db
       chmod 0755 $CRAFT_PRIME/data/db
       chown -R 584788:584788 $CRAFT_PRIME/data/db
+
       # enable security monitoring
       rocks=usr/share/rocks/
       mkdir -p ${rocks}
+
       ## for deb packages
       declare -a arr=()
       arr+=('${db:Status-Abbrev},')
@@ -59,6 +69,7 @@ parts:
       arr+=('${source:Package},')
       arr+=('${Source:Version}\n')
       dpkg-query -W -f "${arr[*]}" > ${rocks}/dpkg.query
+
       ## for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
       cp snap.charmed-mongodb/snapcraft.yaml ${rocks}
