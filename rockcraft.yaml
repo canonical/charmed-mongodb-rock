@@ -71,3 +71,11 @@ parts:
     source: licenses
     organize:
       LICENSE-rock: licenses/LICENSE-rock
+
+  entry:
+    plugin: dump
+    source: scripts
+    organize:
+      start.sh: bin/start.sh
+    stage:
+      - bin/start.sh
