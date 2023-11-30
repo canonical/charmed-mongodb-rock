@@ -36,6 +36,9 @@ jobs:
       - name: Pin charmcraft version
         run: |
           sudo snap refresh --channel=2.2 charmcraft
+      - name: Install rockcraft
+        run: |
+          sudo snap install rockcraft --classic
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
