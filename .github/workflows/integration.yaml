@@ -46,3 +46,9 @@ jobs:
         run: python3 -m pip install tox
       - name: Integration Tests
         run: sg snap_microk8s -c "tox -e ${{ matrix.env }}"
+      
+      - name:  Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+        if: ${{ success() }}
