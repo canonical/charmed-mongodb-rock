@@ -38,7 +38,7 @@ jobs:
           sudo snap refresh --channel=2.2 charmcraft
       - name: Install rockcraft
         run: |
-          sudo snap install rockcraft --classic
+          sudo snap install rockcraft --classic --channel=latest/stable --revision 1206
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
