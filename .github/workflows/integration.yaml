@@ -46,9 +46,22 @@ jobs:
           name: mongodb-rock
       - name: Install tox
         run: python3 -m pip install tox
+
+      - name: Free disk space
+        run: |
+          echo "Free disk space before cleanup"
+          df -T
+          # free space in the runner
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          echo "Free disk space after cleanup"
+          df -T
+      
       - name: Integration Tests
         run: sg snap_microk8s -c "tox -e ${{ matrix.env }}"
-
+           
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
         with:
