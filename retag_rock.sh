@@ -5,7 +5,7 @@
 NAME=$(yq '.name' rockcraft.yaml)
 APP_VERSION=$(yq '.version' rockcraft.yaml)
 VERSION=$(yq '(.version|split("-"))[0]' rockcraft.yaml)
-BASE=$(yq '(.base|split(":"))[1]' rockcraft.yaml)
+BASE=$(yq '(.base|split("@"))[1]' rockcraft.yaml)
 TAG=${VERSION}-${BASE}_edge
 REGISTRY_NAMESPACE=ghcr.io/canonical
 
