@@ -1,5 +1,8 @@
 name: Publish ROCK (beta)
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - '6-22.04'
 
 jobs:
   build:
