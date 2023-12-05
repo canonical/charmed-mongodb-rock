@@ -1,8 +1,5 @@
-name: Publish ROCK (edge)
-on:
-  push:
-    branches:
-      - '[0-9]-[0-9][0-9].[0-9][0-9]'
+name: Publish ROCK (beta)
+on: workflow_dispatch
 
 jobs:
   build:
@@ -41,7 +38,7 @@ jobs:
         run: |
           version=$(yq '(.version)' rockcraft.yaml)
           base=$(yq '(.base|split("@"))[1]' rockcraft.yaml)
-          tag=${version}-${base}_edge
+          tag=${version}-${base}_beta
           sudo skopeo --insecure-policy copy \
             oci-archive:charmed-mongodb_${version}_amd64.rock \
             docker-daemon:ghcr.io/canonical/charmed-mongodb:${tag}
