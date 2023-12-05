@@ -1,8 +1,7 @@
 name: Publish ROCK (beta)
 on:
   workflow_dispatch:
-    branches:
-      - '[0-9]-[0-9][0-9].[0-9][0-9]'
+
 
 jobs:
   build:
