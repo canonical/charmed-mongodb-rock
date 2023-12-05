@@ -1,7 +1,5 @@
 name: Publish ROCK (beta)
-on:
-  workflow_dispatch:
-
+on: workflow_dispatch
 
 jobs:
   build:
