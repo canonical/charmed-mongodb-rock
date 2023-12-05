@@ -36,10 +36,11 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
       - name: Import and push to GHCR
         run: |
-          version=$(yq '(.version)' rockcraft.yaml)
+          version=$(yq '(.version|split("-"))[0]' rockcraft.yaml)
+          rock_image_version=$(yq '(.version)' rockcraft.yaml)
           base=$(yq '(.base|split("@"))[1]' rockcraft.yaml)
           tag=${version}-${base}_beta
           sudo skopeo --insecure-policy copy \
-            oci-archive:charmed-mongodb_${version}_amd64.rock \
+            oci-archive:charmed-mongodb_${rock_image_version}_amd64.rock \
             docker-daemon:ghcr.io/canonical/charmed-mongodb:${tag}
           docker push ghcr.io/canonical/charmed-mongodb:${tag}
