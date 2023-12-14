@@ -1,7 +1,7 @@
 # Copyright 2023 Canonical Ltd.
 # See LICENSE file for licensing details.
 name: charmed-mongodb # the name of your ROCK
-base: ubuntu:22.04 # the base environment for this ROCK
+base: ubuntu@22.04 # the base environment for this ROCK
 version: "5.0.14-12" # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
 description: |
@@ -71,3 +71,11 @@ parts:
     source: licenses
     organize:
       LICENSE-rock: licenses/LICENSE-rock
+
+  entry:
+    plugin: dump
+    source: scripts
+    organize:
+      start.sh: bin/start.sh
+    stage:
+      - bin/start.sh

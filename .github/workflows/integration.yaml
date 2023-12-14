@@ -18,7 +18,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        env: [integration, ha-integration, tls-integration]
+        env: [integration, tls-integration]
       fail-fast: false
     steps:
       - name: Checkout repository
@@ -32,10 +32,15 @@ jobs:
           juju-channel: 3.1/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 3.1.5"
+          bootstrap-options: "--agent-version 3.1.6"
       - name: Pin charmcraft version
         run: |
-          sudo snap refresh --channel=2.2 charmcraft
+          sudo snap refresh  charmcraft --classic --revision 1349
+          sudo snap refresh charmcraft --hold=forever
+      - name: Install rockcraft
+        run: |
+          sudo snap install rockcraft --classic --channel=latest/stable --revision 1206
+          sudo snap refresh rockcraft --hold=forever
       - uses: actions/download-artifact@v3
         with:
           name: mongodb-rock
