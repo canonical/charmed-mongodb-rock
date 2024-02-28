@@ -1,4 +1,6 @@
 ## Introduction to Charmed MongoDB ROCK  (OCI Image)
+[![Publish ROCK](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/publish.yaml/badge.svg)](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/publish.yaml)
+[![Operator Tests](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/integration.yaml/badge.svg)](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/integration.yaml)
 
 [MongoDB](https://github.com/mongodb/mongo) is a source-available, cross-platform, document-oriented database application. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
 
