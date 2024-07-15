@@ -11,7 +11,9 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/build.yaml
+    name: Build rock
+    uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v16
+
   integration:
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -27,29 +29,31 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          channel: "1.27-strict/stable"
+          channel: "1.29-strict/stable"
           bootstrap-constraints: "cores=2 mem=2G"
           juju-channel: 3.1/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 3.1.6"
-      - name: Pin charmcraft version
-        run: |
-          sudo snap refresh  charmcraft --classic --revision 1349
-          sudo snap refresh charmcraft --hold=forever
+          bootstrap-options: "--agent-version 3.1.7"
       - name: Install rockcraft
         run: |
           sudo snap install rockcraft --classic --revision 1206
           sudo snap refresh rockcraft --hold=forever
-      - uses: actions/download-artifact@v3
+      - name: Download rock package(s)
+        uses: actions/download-artifact@v4
         with:
-          name: mongodb-rock
-      - name: Install tox
-        run: python3 -m pip install tox
-
+          pattern: ${{ needs.build.outputs.artifact-prefix }}-*
+          merge-multiple: true
+      - name: Install tox & poetry
+        run: |
+          pipx install tox
+          pipx install poetry
+      - name: Integration Tests
+        run: |
+          sg snap_microk8s -c "tox -e ${{ matrix.env }}"
       - name: Free disk space
         run: |
-          echo "Free disk space before cleanup"
+          echo "Free disk space after int tests"
           df -T
           # free space in the runner
           rockcraft clean
@@ -57,8 +61,5 @@ jobs:
           sudo rm -rf /opt/ghc
           sudo rm -rf /usr/local/share/boost
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          echo "Free disk space after cleanup"
+          echo "Free disk after int tests"
           df -T
-      
-      - name: Integration Tests
-        run: sg snap_microk8s -c "tox -e ${{ matrix.env }}"

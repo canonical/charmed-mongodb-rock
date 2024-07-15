@@ -2,7 +2,6 @@ name: Build Charmed MongoDB rock
 
 on:
   workflow_call:
-  pull_request:
 
 jobs:
   build:
