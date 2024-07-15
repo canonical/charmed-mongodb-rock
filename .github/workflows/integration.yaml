@@ -18,7 +18,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        env: []
+        env: [integration]
       fail-fast: false
     steps:
       - name: Checkout repository
