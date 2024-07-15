@@ -10,14 +10,12 @@ description: |
   as a NoSQL database program, MongoDB uses JSON
   -like documents with optional schemas.
 license: Apache-2.0 # your application's SPDX license
-
 services:
   mongod:
     summary: Start Mongod
     override: replace
     startup: enabled
     command: "/bin/bash /bin/start.sh"
-
 
 platforms: # The platforms this rock should be built on and run on
   amd64:
@@ -28,12 +26,9 @@ parts:
     stage-snaps:
       - charmed-mongodb/6/edge
     overlay-packages:
-      - ca-certificates
-  dep-debs:
-    plugin: nil
-    stage-packages:
       - libssh-4
       - libbrotli1
+      - ca-certificates
   non-root-user:
     plugin: nil
     after: [mongo-snap]
@@ -62,7 +57,7 @@ parts:
       arr+=('${Source:Version}\n')
       dpkg-query -W -f "${arr[*]}" > ${rocks}/dpkg.query
 
-      ## for snap packages
+      # for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
       cp snap.charmed-mongodb/snapcraft.yaml ${rocks}
 
