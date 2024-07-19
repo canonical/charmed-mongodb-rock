@@ -4,9 +4,10 @@ env:
   RELEASE: edge
 
 on:
+  pull_request:
   push:
     branches:
-      - main
+      - 6-22.04
 
 jobs:
   publish:
