@@ -52,8 +52,8 @@ jobs:
 
       - name: Publish rock to Store
         run: |
-          version="$(cat rockcraft.yaml | yq .version)"
-          version="${version%-*}"
+          full_version="$(cat rockcraft.yaml | yq .version)"
+          version="${full_version%-*}"
           base="$(cat rockcraft.yaml | yq .base)"
           base="${base#*:}"
 
@@ -62,7 +62,7 @@ jobs:
           sudo skopeo \
               --insecure-policy \
               copy \
-              oci-archive:charmed-mongodb_${version}_amd64.rock \
+              oci-archive:charmed-mongodb_${full_version}_amd64.rock \
               docker-daemon:ghcr.io/canonical/charmed-mongodb:${major_tag_version}
           docker push ghcr.io/canonical/charmed-mongodb:${major_tag_version}
 
@@ -72,6 +72,6 @@ jobs:
           sudo skopeo \
               --insecure-policy \
               copy \
-              oci-archive:charmed-mongodb_${version}_amd64.rock \
+              oci-archive:charmed-mongodb_${full_version}_amd64.rock \
               docker-daemon:ghcr.io/canonical/charmed-mongodb:${tag_version}
           docker push ghcr.io/canonical/charmed-mongodb:${tag_version}
