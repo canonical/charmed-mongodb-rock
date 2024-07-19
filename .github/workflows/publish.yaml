@@ -3,11 +3,15 @@ name: Publish to GHCR
 env:
   RELEASE: edge
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
-  pull_request:
   push:
     branches:
       - 6-22.04
+  workflow_dispatch:
 
 jobs:
   build:
