@@ -26,9 +26,10 @@ parts:
     stage-snaps:
       - charmed-mongodb/6/edge
     overlay-packages:
+      - ca-certificates
       - libssh-4
       - libbrotli1
-      - ca-certificates
+      - logrotate
   non-root-user:
     plugin: nil
     after: [mongo-snap]
@@ -66,6 +67,7 @@ parts:
     source: licenses
     organize:
       LICENSE-rock: licenses/LICENSE-rock
+      usr/share/doc/logrotate/copyright: licenses/COPYRIGHT-logrotate
 
   entry:
     plugin: dump
