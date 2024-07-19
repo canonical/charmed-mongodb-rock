@@ -28,13 +28,9 @@ jobs:
       - name: Setup operator environment
         uses: charmed-kubernetes/actions-operator@main
         with:
-          provider: microk8s
-          channel: "1.29-strict/stable"
-          bootstrap-constraints: "cores=2 mem=2G"
-          juju-channel: 3.1/stable
-          # This is needed until
-          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 3.1.7"
+          cloud: microk8s
+          microk8s-snap-channel: 1.29-strict/stable
+          juju-agent-version: 3.1.7
       - name: Install rockcraft
         run: |
           sudo snap install rockcraft --classic --revision 1206
