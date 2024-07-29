@@ -31,14 +31,13 @@ jobs:
           provider: microk8s
           channel: "1.29-strict/stable"
           bootstrap-constraints: "cores=2 mem=2G"
-          juju-channel: 3.1/stable
+          juju-channel: 3.4/stable
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 3.1.7"
+          bootstrap-options: "--agent-version 3.4.4"
       - name: Install rockcraft
         run: |
-          sudo snap install rockcraft --classic --revision 1206
-          sudo snap refresh rockcraft --hold=forever
+          sudo snap install rockcraft --classic
       - name: Download rock package(s)
         uses: actions/download-artifact@v4
         with:
@@ -46,8 +45,15 @@ jobs:
           merge-multiple: true
       - name: Install tox & poetry
         run: |
+          sudo apt-get update
+          sudo apt-get install python3-pip python3-venv -y --no-install-recommends
+          python3 -m pip install --user pipx
+          python3 -m pipx ensurepath
+          pipx inject poetry poetry-plugin-export
           pipx install tox
           pipx install poetry
+          pipx install charmcraftcache
+          poetry config warnings.export false
       - name: Integration Tests
         run: |
           sg snap_microk8s -c "tox -e ${{ matrix.env }}"
