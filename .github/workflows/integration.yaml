@@ -15,7 +15,7 @@ jobs:
     uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v16
 
   integration:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64, jammy, large]
     timeout-minutes: 120
     needs: build
     strategy:
