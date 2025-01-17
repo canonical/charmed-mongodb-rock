@@ -35,6 +35,7 @@ jobs:
           # This is needed until
           # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
           bootstrap-options: "--agent-version 3.6.1"
+          charmcraft-channel: "latest/candidate"
       - name: Install rockcraft
         run: |
           sudo snap install rockcraft --classic
