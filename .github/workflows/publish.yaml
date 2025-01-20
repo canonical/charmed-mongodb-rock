@@ -36,7 +36,7 @@ jobs:
           sudo snap disable docker; sudo snap enable docker
 
           # skopeo
-          sudo snap install --devmode --channel edge skopeo
+          sudo apt-get install skopeo -y
 
           # yq
           sudo snap install yq
