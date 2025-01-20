@@ -77,5 +77,4 @@ jobs:
               --insecure-policy \
               copy \
               oci-archive:charmed-mongodb_${full_version}_amd64.rock \
-              docker-daemon:ghcr.io/canonical/charmed-mongodb:${tag_version}
-          docker push ghcr.io/canonical/charmed-mongodb:${tag_version}
+              docker://ghcr.io/canonical/charmed-mongodb:${tag_version}
