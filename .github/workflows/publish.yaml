@@ -23,6 +23,8 @@ jobs:
     name: publish
     runs-on: [self-hosted, linux, X64, jammy, large]
     timeout-minutes: 15
+    permissions:
+      packages: write  # Needed to publish to GitHub Container Registry
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -67,8 +69,7 @@ jobs:
               --insecure-policy \
               copy \
               oci-archive:charmed-mongodb_${full_version}_amd64.rock \
-              docker-daemon:ghcr.io/canonical/charmed-mongodb:${major_tag_version}
-          docker push ghcr.io/canonical/charmed-mongodb:${major_tag_version}
+              docker://ghcr.io/canonical/charmed-mongodb:${major_tag_version}
 
           ### push full version to edge
           tag_version="${version}-${base}_${{ env.RELEASE }}"
