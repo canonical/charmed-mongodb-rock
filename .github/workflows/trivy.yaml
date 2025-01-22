@@ -32,11 +32,11 @@ jobs:
           sudo snap install yq
           BASE_ARTIFACT="$(cat rockcraft.yaml | yq .name)"
           echo "base_artifact_name=${BASE_ARTIFACT#'Artifact: '}" >> $GITHUB_OUTPUT
-      - name: Download artifact
+      - name: Download rock package(s)
         uses: actions/download-artifact@v4
         with:
-          name: charmed-mongodb
-          path: charmed-mongodb
+          pattern: ${{ needs.build.outputs.artifact-prefix }}-*
+          merge-multiple: true
       - name: Import locally
         run: |
           # Unpack artifact
