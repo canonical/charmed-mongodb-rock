@@ -12,27 +12,36 @@ on:
         default: ""
 jobs:
   build:
+    name: Build rock
     uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v29.0.1
   scan:
     name: Trivy scan and sbom generation
     needs: build
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.branch }}
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Install snaps
+      - name: Install required dependencies
         run: |
-          sudo snap install rockcraft --classic --edge
+          # docker
+          sudo snap install docker
+          sudo addgroup --system docker; sudo adduser $USER docker
+          newgrp docker
+          sudo snap disable docker; sudo snap enable docker
+
+          # skopeo
           sudo snap install --devmode --channel edge skopeo
+
+          # yq
           sudo snap install yq
+
       - name: Download rock package(s)
         uses: actions/download-artifact@v4
         with:
           pattern: ${{ needs.build.outputs.artifact-prefix }}-*
           merge-multiple: true
+
       - name: Import locally
         run: |
           full_version="$(cat rockcraft.yaml | yq .version)"
