@@ -29,7 +29,8 @@ jobs:
       - name: Get Artifact Name
         id: artifact
         run: |
-          BASE_ARTIFACT=$(make help | grep 'Artifact: ')
+          sudo snap install yq
+          BASE_ARTIFACT="$(cat rockcraft.yaml | yq .name)"
           echo "base_artifact_name=${BASE_ARTIFACT#'Artifact: '}" >> $GITHUB_OUTPUT
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -52,7 +53,7 @@ jobs:
           severity: "MEDIUM,HIGH,CRITICAL"
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: "trivy-results.sarif"
