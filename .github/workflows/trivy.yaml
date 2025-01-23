@@ -24,6 +24,9 @@ jobs:
 
       - name: Install required dependencies
         run: |
+          # rockcraft
+          sudo snap install rockcraft --classic --edge
+
           # docker
           sudo snap install docker
           sudo addgroup --system docker; sudo adduser $USER docker
@@ -45,11 +48,13 @@ jobs:
       - name: Import locally
         run: |
           full_version="$(cat rockcraft.yaml | yq .version)"
-          sudo skopeo \
-              --insecure-policy \
+          ls
+
+          sudo rockcraft.skopeo   --insecure-policy \
               copy \
-              oci-archive:charmed-mongodb_${full_version}_amd64.rock \
+              oci-archive:charmed-mongodb_6.0.6-2_amd64.rock \
               docker-daemon:trivy/charmed-mongodb:test
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.28.0
         with:
