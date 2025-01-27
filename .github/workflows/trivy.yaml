@@ -4,6 +4,10 @@ on:
     branches:
       - 6-22.04
   pull_request:
+
+permissions:
+  contents: read # Set the GITHUB_TOKEN permissions to read-only
+
 jobs:
   build:
     name: Build rock
@@ -32,9 +36,10 @@ jobs:
 
       - name: Import locally
         run: |
+          full_version="$(cat rockcraft.yaml | yq .version)"
           sudo rockcraft.skopeo   --insecure-policy \
               copy \
-              oci-archive:charmed-mongodb_6.0.6-2_amd64.rock \
+              oci-archive:charmed-mongodb_${full_version}_amd64.rock \
               docker-daemon:trivy/charmed-mongodb:test
 
       - name: Run Trivy vulnerability scanner
