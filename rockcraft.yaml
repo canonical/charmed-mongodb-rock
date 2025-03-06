@@ -48,19 +48,19 @@ parts:
       chown -R 584788:584788 $CRAFT_PRIME/data/db
 
       conf="etc/mongod"
-      mongo_config_file=$conf/mongod.conf
-      mongos_config_file=$conf/mongos.conf
+      mongo_config_file="${conf}/mongod.conf"
+      mongos_config_file="${conf}/mongos.conf"
 
       mkdir -p $CRAFT_PRIME/$conf
-      cp $CRAFT_PRIME/etc/mongod.conf $mongo_config_file
-      cp $CRAFT_PRIME/etc/mongod.conf $mongos_config_file
+      cp $CRAFT_PRIME/etc/mongod.conf "${mongo_config_file}"
+      cp $CRAFT_PRIME/etc/mongod.conf "${mongos_config_file}"
 
-      yq -i ".processManagement.fork = false" $mongo_config_file
-      yq -i ".processManagement.fork = false" $mongos_config_file
-      yq -i ".net.port = 27018" $conf/mongos.conf
-      yq -i "del(.storage)" $conf/mongos.conf
+      yq -i ".processManagement.fork = false" "${mongo_config_file}"
+      yq -i ".processManagement.fork = false" "${mongos_config_file}"
+      yq -i ".net.port = 27018" "${mongos_config_file}"
+      yq -i "del(.storage)" "${mongos_config_file}"
 
-      chown -R 584788:584788 $conf
+      chown -R 584788:584788 "${conf}"
 
       # enable security monitoring
       rocks=usr/share/rocks/
