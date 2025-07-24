@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - 6-22.04
+      - 8-transition-24.04
   pull_request:
 
 jobs:
