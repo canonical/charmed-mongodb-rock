@@ -6,6 +6,7 @@ on:
       - 8-transition-24.04
       - 8-24.04
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
@@ -42,7 +43,7 @@ jobs:
               docker-daemon:trivy/charmed-mongodb:test
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: "trivy/charmed-mongodb:test"
           format: "sarif"
