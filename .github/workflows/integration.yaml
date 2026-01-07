@@ -29,13 +29,11 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          channel: "1.32-strict/stable"
+          channel: 1.32-strict/stable
+          microk8s-addons: "dns hostpath-storage rbac"
           bootstrap-constraints: "cores=2 mem=2G"
           juju-channel: 3.6/stable
-          # This is needed until
-          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
-          bootstrap-options: "--agent-version 3.6.1"
-          charmcraft-channel: "latest/candidate"
+          charmcraft-channel: 3.x/stable
       - name: Install rockcraft
         run: |
           sudo snap install rockcraft --classic
