@@ -30,7 +30,7 @@ jobs:
         with:
           provider: microk8s
           channel: 1.32-strict/stable
-          microk8s-addons: "dns hostpath-storage rbac"
+          microk8s-addons: "dns hostpath-storage"
           bootstrap-constraints: "cores=2 mem=2G"
           juju-channel: 3.6/stable
           charmcraft-channel: 3.x/stable
