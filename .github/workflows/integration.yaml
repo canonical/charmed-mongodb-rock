@@ -15,7 +15,7 @@ jobs:
     uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v40.0.2
 
   integration:
-    runs-on: [self-hosted, linux, X64, noble, large]
+    runs-on: [self-hosted, linux, X64, jammy, large]
     timeout-minutes: 120
     needs: build
     strategy:
@@ -29,11 +29,13 @@ jobs:
         uses: charmed-kubernetes/actions-operator@main
         with:
           provider: microk8s
-          channel: 1.32-strict/stable
-          microk8s-addons: "dns hostpath-storage"
+          channel: "1.29-strict/stable"
           bootstrap-constraints: "cores=2 mem=2G"
           juju-channel: 3.6/stable
-          charmcraft-channel: 3.x/stable
+          # This is needed until
+          # https://bugs.launchpad.net/juju/+bug/1977582 is fixed
+          bootstrap-options: "--agent-version 3.6.1"
+          charmcraft-channel: "latest/candidate"
       - name: Install rockcraft
         run: |
           sudo snap install rockcraft --classic
