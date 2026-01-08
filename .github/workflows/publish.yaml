@@ -18,13 +18,13 @@ on:
 jobs:
   build:
     name: Build rock
-    uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v29.0.1
+    uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v40.0.2
 
   publish:
     name: Release rock
     needs:
       - build
-    uses: canonical/data-platform-workflows/.github/workflows/release_rock.yaml@v29.0.1
+    uses: canonical/data-platform-workflows/.github/workflows/release_rock.yaml@v40.0.2
     with:
       artifact-prefix: ${{ needs.build.outputs.artifact-prefix }}
     permissions:
