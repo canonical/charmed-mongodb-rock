@@ -2,7 +2,7 @@
 # See LICENSE file for licensing details.
 name: charmed-mongodb # the name of your rock
 base: ubuntu@24.04 # the base environment for this rock
-version: "7.0.18-11" # just for humans. Semantic versioning is recommended
+version: "7.0.28-15" # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
 description: |
   MongoDB is a source-available cross-platform
