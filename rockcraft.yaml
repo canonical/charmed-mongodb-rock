@@ -19,6 +19,7 @@ services:
 
 platforms: # The platforms this rock should be built on and run on
   amd64:
+  arm64:
 
 parts:
   mongo-snap:
@@ -73,7 +74,9 @@ parts:
       arr+=('${Version},')
       arr+=('${source:Package},')
       arr+=('${Source:Version}\n')
-      dpkg-query -W -f "${arr[*]}" > ${rocks}/dpkg.query
+
+      (echo "# os-release" && cat /etc/os-release) > ${rocks}/dpkg-query
+      dpkg-query -f "${arr[*]}" -W >> ${rocks}/dpkg.query
 
       # for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
