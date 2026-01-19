@@ -68,7 +68,15 @@ parts:
       mkdir -p ${rocks}
 
       ## for deb packages
-      (echo "# os-release" && cat /etc/os-release && echo "# dpkg-query" && dpkg-query -f '${db:Status-Abbrev},${binary:Package},${Version},${source:Package},${Source:Version}\n' -W) > ${rocks}/dpkg.query
+      declare -a arr=()
+      arr+=('${db:Status-Abbrev},')
+      arr+=('${binary:Package},')
+      arr+=('${Version},')
+      arr+=('${source:Package},')
+      arr+=('${Source:Version}\n')
+
+      (echo "# os-release" && cat /etc/os-release) > ${rocks}/dpkg-query
+      dpkg-query -f "${arr[*]}" -W >> ${rocks}/dpkg.query
 
       # for snap packages
       cp snap.charmed-mongodb/manifest.yaml ${rocks}
