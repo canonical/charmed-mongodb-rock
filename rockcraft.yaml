@@ -96,7 +96,9 @@ parts:
       start.sh: bin/start.sh
       start-mongod.sh: bin/start-mongod.sh
       start-mongos.sh: bin/start-mongos.sh
+      start-vault-agent.sh: bin/start-vault-agent.sh
     stage:
       - bin/start.sh
       - bin/start-mongod.sh
       - bin/start-mongos.sh
+      - bin/start-vault-agent.sh
