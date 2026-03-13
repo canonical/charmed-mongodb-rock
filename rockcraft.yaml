@@ -16,6 +16,13 @@ services:
     override: replace
     startup: enabled
     command: "/bin/bash /bin/start.sh"
+  vault-agent:
+    summary: Vault Agent layer
+    override: replace
+    startup: disabled
+    command: "/bin/bash /bin/start-vault-agent.sh"
+    user: mongodb
+    group: mongodb
 
 platforms: # The platforms this rock should be built on and run on
   amd64:
