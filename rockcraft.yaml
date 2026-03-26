@@ -24,6 +24,11 @@ services:
     user: mongodb
     group: mongodb
 
+run-user: _daemon_
+
+environment:
+  SSL_CERT_DIR: "/etc/ssl/certs:/etc/pbm/certs"
+
 platforms: # The platforms this rock should be built on and run on
   amd64:
   arm64:
@@ -46,7 +51,7 @@ parts:
     overlay-script: |
       # Create a user in the $CRAFT_OVERLAY chroot
       groupadd -R $CRAFT_OVERLAY -g  584788 mongodb
-      useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 584788 mongodb
+      useradd -R $CRAFT_OVERLAY -m -r -g mongodb -u 584788 mongodb
     override-prime: |
       craftctl default
 
@@ -56,6 +61,7 @@ parts:
       chown -R 584788:584788 $CRAFT_PRIME/data/db
 
       conf="etc/mongod"
+      pbm_config="etc/pbm"
       mongo_config_file="${conf}/mongod.conf"
       mongos_config_file="${conf}/mongos.conf"
 
@@ -69,6 +75,18 @@ parts:
       yq -i "del(.storage)" "${mongos_config_file}"
 
       chown -R 584788:584788 "${conf}"
+
+      mkdir -p $CRAFT_PRIME/$pbm_config
+      mkdir -p $CRAFT_PRIME/$pbm_config/certs
+      chown -R 584788:584788 "${pbm_config}"
+
+      install -d -o 584788 -g 584788 -m 770 \
+        var/lib/mongodb \
+        var/log/mongodb \
+        etc/mongod \
+        etc/ldap \
+        etc/pbm \
+        etc/vault \
 
       # enable security monitoring
       rocks=usr/share/rocks/
