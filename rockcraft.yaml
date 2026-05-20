@@ -1,6 +1,6 @@
 # Copyright 2023 Canonical Ltd.
 # See LICENSE file for licensing details.
-name: charmed-mongodb # the name of your rock
+name: mongodb # the name of your rock
 base: ubuntu@24.04 # the base environment for this rock
 version: "8.0.10-3" # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
@@ -16,13 +16,6 @@ services:
     override: replace
     startup: enabled
     command: "/bin/bash /bin/start.sh"
-  vault-agent:
-    summary: Vault Agent layer
-    override: replace
-    startup: disabled
-    command: "/bin/bash /bin/start-vault-agent.sh"
-    user: mongodb
-    group: mongodb
 
 platforms: # The platforms this rock should be built on and run on
   amd64:
@@ -32,7 +25,7 @@ parts:
   mongo-snap:
     plugin: nil
     stage-snaps:
-      - charmed-mongodb/8/edge
+      - mongodb/8/edge
       - yq
     overlay-packages:
       - ca-certificates
@@ -57,16 +50,11 @@ parts:
 
       conf="etc/mongod"
       mongo_config_file="${conf}/mongod.conf"
-      mongos_config_file="${conf}/mongos.conf"
 
       mkdir -p $CRAFT_PRIME/$conf
       cp $CRAFT_PRIME/etc/mongod.conf "${mongo_config_file}"
-      cp $CRAFT_PRIME/etc/mongod.conf "${mongos_config_file}"
 
       yq -i ".processManagement.fork = false" "${mongo_config_file}"
-      yq -i ".processManagement.fork = false" "${mongos_config_file}"
-      yq -i ".net.port = 27018" "${mongos_config_file}"
-      yq -i "del(.storage)" "${mongos_config_file}"
 
       chown -R 584788:584788 "${conf}"
 
@@ -86,8 +74,8 @@ parts:
       dpkg-query -f "${arr[*]}" -W >> ${rocks}/dpkg.query
 
       # for snap packages
-      cp snap.charmed-mongodb/manifest.yaml ${rocks}
-      cp snap.charmed-mongodb/snapcraft.yaml ${rocks}
+      cp snap.mongodb/manifest.yaml ${rocks}
+      cp snap.mongodb/snapcraft.yaml ${rocks}
 
   rock-license:
     plugin: dump
@@ -102,10 +90,6 @@ parts:
     organize:
       start.sh: bin/start.sh
       start-mongod.sh: bin/start-mongod.sh
-      start-mongos.sh: bin/start-mongos.sh
-      start-vault-agent.sh: bin/start-vault-agent.sh
     stage:
       - bin/start.sh
       - bin/start-mongod.sh
-      - bin/start-mongos.sh
-      - bin/start-vault-agent.sh

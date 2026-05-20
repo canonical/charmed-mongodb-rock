@@ -47,64 +47,7 @@ This should output something like this:
 CONTAINER ID   IMAGE                                COMMAND                  CREATED          STATUS          PORTS     NAMES
 bf08481d18a3   ghcr.io/canonical/charmed-mongodb:6.0.6-22.04_edge   "/bin/pebble enter -…"   About a minute ago   Up About a minute             quizzical_sinoussi
 ```
-The name of the container is listed under `NAME` - use this name to connect to your now running database
-```
-sudo docker exec --interactive <container-name> mongosh
-```
-Now enter `show dbs` this should show you all of your available databases and output something like: 
-```
-admin   0.000GB
-config  0.000GB
-local   0.000GB
-```
-
-While using `mongo` can run a variety of [database commands](https://www.mongodb.com/docs/manual/reference/command/) such as creating databases, users, adding config options, etc. When you are ready to return to the terminal enter `exit`.
-
-
-### Backup and restore
-Percona Backup for MongoDB (`pbm`) is packaged within the Charmed MongoDB rock. To use it you can follow these instructions.
-
-Percona Backup for MongoDB has a set of pre-requisites, to function properly. These can be found here:[ https://docs.percona.com/percona-backup-mongodb/initial-setup.html](https://docs.percona.com/percona-backup-mongodb/initial-setup.html)
-
-It is up to you to add the pbm user to your MongoDB database. But we will explain how to configure pbm and how to use the tool.
-
-To configure the `pbm` tool, it is necessary to create a config file and set `pbm` to use it. Before setting the config file and options it is necessary to provide `pbm` with a suitable [Mongodb URI](https://www.mongodb.com/docs/manual/reference/connection-string/): 
-
-*Note this URI may look different if you have auth, tls, or replication enabled*
-
-```
-sudo docker exec  <container-name> touch config.txt
-sudo docker exec romantic_newton pbm config --file=config.txt --mongodb-uri=mongodb://127.0.0.1:27017
-sudo docker exec  <container-name> pbm config --set storage.type=s3 --mongodb-uri=mongodb://127.0.0.1:27017
-```
-
-Starting pbm-agent: The pbm-agent is a daemon that performs the backup and restore operations. You can start the pbm-agent by starting the pbm-agent process and providing it with your MongoDB URI: 
-```
-sudo docker exec <container-name> pbm-agent --mongodb-uri=mongodb://127.0.0.1:27017
-```
-Leave the `pbm-agent` daemon running and create another terminal.
-
-If you would like to see the pbm logs you can enter the following command with the correct URI:
-```
-sudo docker exec <container-name> pbm logs  --mongodb-uri=mongodb://127.0.0.1:27017
-```
-
-Backups and more: Once you've configured everything appropriately and started the agent you may now perform backups and restores. Performing a backup can be done with: 
-```
-sudo docker exec <container-name> pbm backup
-```
-
-Check out the rest of the supported operations with:
-```
-docker exec <container-name> pbm --help
-``` 
-
-### Others tools within the rock
-
-The MongoDB rock also packages other useful tools like `mongodb-exporter`, `mongodump`, `mongorestore`, and many other tools. You can read more about the tools packaged in the snap by entering:
-```
-docker exec <container-name> <tool name> --help`
-``` 
+The name of the container is listed under `NAME`.
 
 
 ## Bugs and feature request
