@@ -27,7 +27,7 @@ parts:
     stage-snaps:
       - charmed-mongodb/6/edge
       - yq
-    overlay-packages:
+    stage-packages:
       - ca-certificates
       - libssh-4
       - libbrotli1
