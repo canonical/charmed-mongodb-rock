@@ -18,7 +18,7 @@ jobs:
       contents: read
 
   integration:
-    runs-on: [self-hosted, linux, X64, jammy, large]
+    runs-on: [self-hosted, linux, X64, noble, large]
     timeout-minutes: 120
     needs: build
     strategy:
