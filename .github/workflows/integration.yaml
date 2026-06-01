@@ -13,6 +13,9 @@ jobs:
   build:
     name: Build rock
     uses: canonical/data-platform-workflows/.github/workflows/build_rock.yaml@v41.0.0
+    permissions:
+      actions: read # Needed for GitHub API call to get workflow version
+      contents: read
 
   integration:
     runs-on: [self-hosted, linux, X64, jammy, large]
@@ -22,6 +25,8 @@ jobs:
       matrix:
         env: [integration, sharding-integration]
       fail-fast: false
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
