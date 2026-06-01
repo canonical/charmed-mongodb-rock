@@ -36,10 +36,9 @@ parts:
   non-root-user:
     plugin: nil
     after: [mongo-snap]
-    overlay-script: |
-      # Create a user in the $CRAFT_OVERLAY chroot
-      groupadd -R $CRAFT_OVERLAY -g  584788 mongodb
-      useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 584788 mongodb
+    override-overlay: |
+      groupadd -g  584788 mongodb
+      useradd -M -r -g mongodb -u 584788 mongodb
     override-prime: |
       craftctl default
 
