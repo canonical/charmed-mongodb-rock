@@ -18,7 +18,7 @@ jobs:
       contents: read
 
   integration:
-    runs-on: self-hosted-linux-amd64-noble-medium
+    runs-on: ubuntu-latest
     timeout-minutes: 120
     needs: build
     strategy:
@@ -30,6 +30,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+      - name: Setup python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
       - name: Setup operator environment
         uses: charmed-kubernetes/actions-operator@main
         with:
@@ -48,14 +52,12 @@ jobs:
           merge-multiple: true
       - name: Install tox & poetry
         run: |
-          sudo apt-get update
-          sudo apt-get install python3-pip python3-venv -y --no-install-recommends
-          python3 -m pip install --user pipx
-          python3 -m pipx ensurepath
           pipx install tox
           pipx install poetry
           pipx install charmcraftcache
           pipx inject poetry poetry-plugin-export
+
+          $(pipx environment --value PIPX_BIN_DIR)/poetry env use $pythonLocation
       - name: Install yq
         run: |
           sudo snap install yq --classic
