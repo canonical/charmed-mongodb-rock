@@ -30,10 +30,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup python 3.12
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
       - name: Setup operator environment
         uses: charmed-kubernetes/actions-operator@main
         with:
@@ -56,8 +52,6 @@ jobs:
           pipx install poetry
           pipx install charmcraftcache
           pipx inject poetry poetry-plugin-export
-
-          $(pipx environment --value PIPX_BIN_DIR)/poetry env use $pythonLocation
       - name: Install yq
         run: |
           sudo snap install yq --classic
