@@ -20,3 +20,5 @@ jobs:
         run: python3 -m pip install tox
       - name: YAML Lint
         run: tox -e lint
+    permissions:
+      contents: read
