@@ -2,7 +2,7 @@
 # See LICENSE file for licensing details.
 name: charmed-mongodb # the name of your rock
 base: ubuntu@24.04 # the base environment for this rock
-version: "8.0.10-3" # just for humans. Semantic versioning is recommended
+version: "8.0.10-4" # just for humans. Semantic versioning is recommended
 summary: MongoDB in a rock. # 79 char long summary
 description: |
   MongoDB is a source-available cross-platform
@@ -34,7 +34,7 @@ parts:
     stage-snaps:
       - charmed-mongodb/8/edge
       - yq
-    overlay-packages:
+    stage-packages:
       - ca-certificates
       - libssh-4
       - libbrotli1
@@ -43,10 +43,9 @@ parts:
   non-root-user:
     plugin: nil
     after: [mongo-snap]
-    overlay-script: |
-      # Create a user in the $CRAFT_OVERLAY chroot
-      groupadd -R $CRAFT_OVERLAY -g  584788 mongodb
-      useradd -R $CRAFT_OVERLAY -M -r -g mongodb -u 584788 mongodb
+    override-overlay: |
+      groupadd -g  584788 mongodb
+      useradd -M -r -g mongodb -u 584788 mongodb
     override-prime: |
       craftctl default
 
