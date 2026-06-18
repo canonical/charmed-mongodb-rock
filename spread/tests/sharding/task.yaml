@@ -1,0 +1,9 @@
+summary: Sharding operator integration test
+
+execute: |
+  set -eux
+
+  export PATH="$PATH:$(pipx environment --value PIPX_BIN_DIR)"
+
+  cd "$SPREAD_PATH/operator"
+  tox -e integration -- tests/integration/test_sharding.py

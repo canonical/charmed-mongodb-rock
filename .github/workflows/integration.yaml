@@ -19,46 +19,39 @@ jobs:
 
   integration:
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 240
     needs: build
-    strategy:
-      matrix:
-        env: [integration, sharding-integration]
-      fail-fast: false
     permissions:
       contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Setup operator environment
-        uses: charmed-kubernetes/actions-operator@main
-        with:
-          provider: microk8s
-          channel: "1.35-strict/stable"
-          bootstrap-constraints: "cores=2 mem=2G"
-          juju-channel: 3.6/stable
-          charmcraft-channel: "latest/candidate"
-      - name: Install rockcraft
-        run: |
-          sudo snap install rockcraft --classic
+
       - name: Download rock package(s)
         uses: actions/download-artifact@v4
         with:
           pattern: ${{ needs.build.outputs.artifact-prefix }}-*
           merge-multiple: true
-      - name: Install tox & poetry
+
+      - name: Set up spread environment
         run: |
+          snap list lxd || sudo snap install lxd
+          sudo adduser "$USER" lxd
+          sudo --user "$USER" --preserve-env --preserve-env=PATH -- env -- lxd waitready
+          sudo --user "$USER" --preserve-env --preserve-env=PATH -- env -- lxd init --auto
+          sudo iptables -F FORWARD
+          sudo iptables -P FORWARD ACCEPT
+
+          snap list rockcraft || sudo snap install rockcraft --classic
           pipx install tox
-          pipx install poetry
-          pipx install charmcraftcache
-          pipx inject poetry poetry-plugin-export
-      - name: Install yq
-        run: |
-          sudo snap install yq --classic
+
       - name: Integration Tests
         run: |
-          sg snap_microk8s -c "tox -e ${{ matrix.env }}"
+          TOX_BIN="$(pipx environment --value PIPX_BIN_DIR)/tox"
+          sg lxd -c "${TOX_BIN} -e integration"
+
       - name: Free disk space
+        if: always()
         run: |
           echo "Free disk space after int tests"
           df -T
