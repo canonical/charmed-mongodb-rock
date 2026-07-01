@@ -101,6 +101,7 @@ suites:
         "$ROCK_IMAGE" \
         "$ROCK_IMAGE_SOURCE"
     restore-each: |
+      juju debug-log --replay --no-tail -m concierge-k8s:testing || true
       juju destroy-model \
         --force \
         --no-wait \

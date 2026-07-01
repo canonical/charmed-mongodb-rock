@@ -18,9 +18,18 @@ jobs:
       contents: read
 
   integration:
-    runs-on: ubuntu-24.04
+    name: Integration tests | ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 240
     needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
     permissions:
       contents: read
     steps:
@@ -30,7 +39,7 @@ jobs:
       - name: Download rock package(s)
         uses: actions/download-artifact@v4
         with:
-          pattern: ${{ needs.build.outputs.artifact-prefix }}-*
+          pattern: ${{ needs.build.outputs.artifact-prefix }}-*--platform-${{ matrix.arch }}
           merge-multiple: true
 
       - name: Set up spread environment
@@ -49,17 +58,3 @@ jobs:
         run: |
           TOX_BIN="$(pipx environment --value PIPX_BIN_DIR)/tox"
           sg lxd -c "${TOX_BIN} -e integration"
-
-      - name: Free disk space
-        if: always()
-        run: |
-          echo "Free disk space after int tests"
-          df -T
-          # free space in the runner
-          rockcraft clean
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /usr/local/share/boost
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          echo "Free disk after int tests"
-          df -T
