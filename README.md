@@ -1,5 +1,3 @@
-# Deprecation Notice
-
 > [!WARNING]
 > This repository is deprecated and no longer maintained. The Charmed MongoDB rock
 > has moved to the [mongodb-artifacts repository](https://github.com/canonical/mongodb-artifacts).
