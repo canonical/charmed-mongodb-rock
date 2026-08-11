@@ -1,3 +1,9 @@
+# Deprecation Notice
+
+> [!WARNING]
+> This repository is deprecated and no longer maintained. The Charmed MongoDB rock
+> has moved to the [mongodb-artifacts repository](https://github.com/canonical/mongodb-artifacts).
+
 ## Introduction to Charmed MongoDB rock  (OCI Image)
 [![Publish rock](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/publish.yaml/badge.svg)](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/publish.yaml)
 [![Operator Tests](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/integration.yaml/badge.svg)](https://github.com/canonical/charmed-mongodb-rock/actions/workflows/integration.yaml)
